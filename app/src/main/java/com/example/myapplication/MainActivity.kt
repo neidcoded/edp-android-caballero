@@ -221,7 +221,7 @@ fun BusinessCardPreview() {
                 title = "Data Analitics (pending)",
                 phone = "09275117041",
                 email = "bcaballero06578@liceo.edu.ph",
-                address = "BRYGY17 Magsaysay street CDOC",
+                address = "BRGY17 Magsaysay Street CDOC",
                 profileImageResId = R.drawable.pfp
             )
         }
