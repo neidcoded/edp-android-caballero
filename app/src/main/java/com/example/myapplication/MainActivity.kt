@@ -218,7 +218,7 @@ fun BusinessCardPreview() {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             BusinessCard(
                 name = "Bienedict E. Caballero",
-                title = "Data Analitics (pending)",
+                title = "Data Analytics (pending)",
                 phone = "09275117041",
                 email = "bcaballero06578@liceo.edu.ph",
                 address = "BRGY17 Magsaysay Street CDOC",
