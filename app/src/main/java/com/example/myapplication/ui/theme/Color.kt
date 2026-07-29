@@ -3,8 +3,8 @@ package com.example.myapplication.ui.theme
 import androidx.compose.ui.graphics.Color
 
 // Light Palette
-val PrimaryLight = Color(0xFF771C1B)
-val OnPrimaryLight = Color(0xFFFFFFFF)
+val PrimaryLight = Color(0xFF800000)
+val OnPrimaryLight = Color(0xFF560000)
 val PrimaryContainerLight = Color(0xFFE9C9C8)
 val SecondaryLight = Color(0xFF9E4744)
 val SurfaceLight = Color(0xFFFFFBFF)
