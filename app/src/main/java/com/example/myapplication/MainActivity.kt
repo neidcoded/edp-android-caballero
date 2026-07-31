@@ -4,14 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -24,11 +24,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MyApplicationTheme {
-                Surface(
+                Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    ReactiveScreen()
+                    containerColor = Color.White
+                ) { innerPadding ->
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(innerPadding),
+                        color = Color.White
+                    ) {
+                        ReactiveScreen()
+                    }
                 }
             }
         }
@@ -37,38 +44,36 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun ReactiveScreen() {
-    // 'count' is STATE: remember keeps it across recompositions,
-    // mutableStateOf makes Compose watch it for changes.
     var count by remember { mutableStateOf(0) }
-
-    // Part B: 'name' state
-    // Part C: rememberSaveable so it survives rotation
     var name by rememberSaveable { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.White)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Part B: Greeting and TextField
         Text(
             text = if (name.isBlank()) "Hello, stranger!"
             else "Hello, $name!",
             fontSize = 26.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = Color.Black
         )
+
         Spacer(Modifier.height(16.dp))
+
         OutlinedTextField(
             value = name,
-            onValueChange = { name = it }, // WRITE updates the state
-            label = { Text("Enter your name") }
+            onValueChange = { name = it },
+            label = { Text("Enter your name") },
+            singleLine = true
         )
 
         Spacer(Modifier.height(32.dp))
 
-        // Part D: Hoisted Counter
         CounterControls(
             count = count,
             onIncrement = { count++ },
@@ -80,18 +85,32 @@ fun ReactiveScreen() {
 
 @Composable
 fun CounterControls(
-    count: Int, // value flows DOWN
-    onIncrement: () -> Unit, // events flow UP
+    count: Int,
+    onIncrement: () -> Unit,
     onDecrement: () -> Unit,
     onReset: () -> Unit
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "Count: $count", fontSize = 24.sp)
+        Text(
+            text = "Count: $count", 
+            fontSize = 24.sp,
+            color = Color.Black
+        )
+
         Spacer(Modifier.height(16.dp))
+
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            Button(onClick = onDecrement) { Text("–") }
-            Button(onClick = onReset) { Text("Reset") }
-            Button(onClick = onIncrement) { Text("+") }
+            Button(onClick = onDecrement) {
+                Text("–")
+            }
+
+            Button(onClick = onReset) {
+                Text("Reset")
+            }
+
+            Button(onClick = onIncrement) {
+                Text("+")
+            }
         }
     }
 }
@@ -100,6 +119,8 @@ fun CounterControls(
 @Composable
 fun ReactiveScreenPreview() {
     MyApplicationTheme {
-        ReactiveScreen()
+        Surface(color = Color.White) {
+            ReactiveScreen()
+        }
     }
 }
