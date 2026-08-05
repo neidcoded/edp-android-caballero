@@ -121,7 +121,7 @@ fun ProfileScreen() {
 @Composable
 fun InfoRow(icon: ImageVector, label: String, value: String) {
     Row(
-        modifier = Modifier
+            modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
