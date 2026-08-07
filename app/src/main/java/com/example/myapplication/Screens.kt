@@ -19,8 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+import androidx.compose.ui.tooling.preview.Preview
+import com.example.myapplication.ui.theme.MyApplicationTheme
+
 @Composable
 fun HomeScreen(onShowGreeting: (String) -> Unit) {
+
 
     var name by remember { mutableStateOf("") }
 
@@ -54,6 +58,15 @@ fun HomeScreen(onShowGreeting: (String) -> Unit) {
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    MyApplicationTheme {
+        HomeScreen(onShowGreeting = {})
+    }
+}
+
 
 @Composable
 fun GreetingScreen(userName: String) {

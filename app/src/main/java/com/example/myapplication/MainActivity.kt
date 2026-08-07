@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
@@ -14,11 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 
-import androidx.compose.ui.graphics.Color
-
-// Liceo de Cagayan University Colors
-val LiceoMaroon = Color(0xFF800000)
-val LiceoGold = Color(0xFFFFD700)
+import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -28,7 +23,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
 
-            MaterialTheme {
+            MyApplicationTheme {
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize()
@@ -37,8 +32,7 @@ class MainActivity : ComponentActivity() {
                     Surface(
                         modifier = Modifier
                             .fillMaxSize()
-                            .padding(innerPadding),
-                        color = Color.White
+                            .padding(innerPadding)
                     ) {
 
                         val navController = rememberNavController()
