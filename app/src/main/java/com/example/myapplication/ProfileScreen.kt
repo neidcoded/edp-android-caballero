@@ -1,8 +1,5 @@
 package com.example.myapplication
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -40,7 +37,7 @@ fun ProfileForm(state: ProfileUiState, viewModel: ProfileViewModel) {
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = "My Profile", 
+            text = "My Profile",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
@@ -91,7 +88,6 @@ fun ProfileForm(state: ProfileUiState, viewModel: ProfileViewModel) {
         Spacer(Modifier.height(16.dp))
         Text("Skills", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
 
-        // Type a skill + Add button
         Row(verticalAlignment = Alignment.CenterVertically) {
             OutlinedTextField(
                 value = state.newSkill,
@@ -109,7 +105,6 @@ fun ProfileForm(state: ProfileUiState, viewModel: ProfileViewModel) {
             }
         }
 
-        // One row per skill, each with a Remove button
         state.skills.forEach { skill ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -145,7 +140,7 @@ fun ProfilePreview(state: ProfileUiState, onBack: () -> Unit) {
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = "Profile Preview", 
+            text = "Profile Preview",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colorScheme.primary
