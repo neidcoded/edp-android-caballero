@@ -1,169 +1,197 @@
-package com.liceo.prelim.profilecard
+package com.example.myapplication
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Groups
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.School
-import androidx.compose.material3.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.myapplication.ui.theme.MyApplicationTheme
+import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-fun ProfileScreen() {
+fun ProfileForm(state: ProfileUiState, viewModel: ProfileViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(24.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
     ) {
-
-        // 1. Circular avatar - initials placeholder
-        Box(
-            modifier = Modifier
-                .size(120.dp)
-                .clip(CircleShape)
-                .background(MaterialTheme.colorScheme.primary)
-                .border(2.dp, MaterialTheme.colorScheme.onPrimary, CircleShape),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                text = "BC", // Initials for Bienedict Caballero
-                style = MaterialTheme.typography.headlineSmall,
-                color = MaterialTheme.colorScheme.onPrimary
-            )
-        }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // 2. Full name - bold, largest text
         Text(
-            text = "Bienedict E. Caballero",
-            style = MaterialTheme.typography.headlineSmall,
-            color = MaterialTheme.colorScheme.primary,
-            fontWeight = FontWeight.Bold
+            text = "My Profile", 
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Spacer(Modifier.height(12.dp))
+
+        val textFieldColors = OutlinedTextFieldDefaults.colors(
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedLabelColor = MaterialTheme.colorScheme.primary
         )
 
-        // 3. Course + Section subtitle
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Icon(
-                imageVector = Icons.Default.School,
-                contentDescription = null,
-                modifier = Modifier.size(18.dp),
-                tint = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text(
-                text = "BSIT - 3-2",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        }
+        OutlinedTextField(
+            value = state.name,
+            onValueChange = { viewModel.onNameChange(it) },
+            label = { Text("Full name") },
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors
+        )
+        OutlinedTextField(
+            value = state.email,
+            onValueChange = { viewModel.onEmailChange(it) },
+            label = { Text("Email") },
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors
+        )
+        OutlinedTextField(
+            value = state.contactNumber,
+            onValueChange = { viewModel.onContactChange(it) },
+            label = { Text("Contact number") },
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors
+        )
+        OutlinedTextField(
+            value = state.address,
+            onValueChange = { viewModel.onAddressChange(it) },
+            label = { Text("Address") },
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors
+        )
+        OutlinedTextField(
+            value = state.username,
+            onValueChange = { viewModel.onUsernameChange(it) },
+            label = { Text("Username") },
+            modifier = Modifier.fillMaxWidth(),
+            colors = textFieldColors
+        )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(Modifier.height(16.dp))
+        Text("Skills", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
 
-        // 4. Info Card
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp)
-        ) {
-            Column(
-                modifier = Modifier.padding(16.dp)
+        // Type a skill + Add button
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            OutlinedTextField(
+                value = state.newSkill,
+                onValueChange = { viewModel.onNewSkillChange(it) },
+                label = { Text("Add a skill") },
+                modifier = Modifier.weight(1f),
+                colors = textFieldColors
+            )
+            Spacer(Modifier.width(8.dp))
+            Button(
+                onClick = { viewModel.addSkill() },
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
             ) {
-                // 5. Five info rows
-                InfoRow(
-                    icon = Icons.Default.Person,
-                    label = "Full Name",
-                    value = "Bienedict E. Caballero"
-                )
-                InfoRow(
-                    icon = Icons.Default.School,
-                    label = "Course",
-                    value = "Bachelor of Science in Information Technology"
-                )
-                InfoRow(
-                    icon = Icons.Default.Groups,
-                    label = "Section",
-                    value = "3-2"
-                )
-                InfoRow(
-                    icon = Icons.Default.Phone,
-                    label = "Mobile No.",
-                    value = "09275117041"
-                )
-                InfoRow(
-                    icon = Icons.Default.Email,
-                    label = "Email Address",
-                    value = "bcaballero06578@liceo.edu.ph"
-                )
+                Text("Add")
             }
         }
+
+        // One row per skill, each with a Remove button
+        state.skills.forEach { skill ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("• $skill", modifier = Modifier.weight(1f))
+                TextButton(
+                    onClick = { viewModel.removeSkill(skill) },
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)
+                ) {
+                    Text("Remove")
+                }
+            }
+        }
+
+        Spacer(Modifier.height(20.dp))
+        Button(
+            onClick = { viewModel.showPreview() },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+        ) {
+            Text("Preview")
+        }
     }
 }
 
 @Composable
-fun InfoRow(icon: ImageVector, label: String, value: String) {
-    Row(
-            modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically
+fun ProfilePreview(state: ProfileUiState, onBack: () -> Unit) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState())
     ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = label,
-            modifier = Modifier.size(24.dp),
-            tint = MaterialTheme.colorScheme.primary
+        Text(
+            text = "Profile Preview", 
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colorScheme.primary
         )
-        Spacer(modifier = Modifier.width(16.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = label,
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Text(
-                text = value,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onSurface
-            )
+        Spacer(Modifier.height(12.dp))
+
+        InfoRowPreview("Name", state.name)
+        InfoRowPreview("Email", state.email)
+        InfoRowPreview("Contact", state.contactNumber)
+        InfoRowPreview("Address", state.address)
+        InfoRowPreview("Username", state.username)
+
+        Spacer(Modifier.height(8.dp))
+        Text("Skills:", fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)
+        if (state.skills.isEmpty()) {
+            Text("No skills added yet.")
+        } else {
+            state.skills.forEach { skill -> Text("• $skill") }
+        }
+
+        Spacer(Modifier.height(20.dp))
+        OutlinedButton(
+            onClick = onBack,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.primary)
+        ) {
+            Text("Back to edit")
         }
     }
 }
 
-@Preview(showBackground = true, name = "Light Mode")
 @Composable
-fun ProfileScreenPreview() {
-    MyApplicationTheme(darkTheme = false) {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            ProfileScreen()
-        }
+fun InfoRowPreview(label: String, value: String) {
+    Row(modifier = Modifier.padding(vertical = 4.dp)) {
+        Text("$label: ", fontWeight = FontWeight.Bold)
+        Text(value)
     }
 }
 
-@Preview(showBackground = true, name = "Dark Mode")
 @Composable
-fun ProfileScreenDarkPreview() {
-    MyApplicationTheme(darkTheme = true) {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            ProfileScreen()
-        }
+fun ProfileScreen(viewModel: ProfileViewModel = viewModel()) {
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+
+    if (state.isPreview) {
+        ProfilePreview(state = state, onBack = { viewModel.backToEdit() })
+    } else {
+        ProfileForm(state = state, viewModel = viewModel)
     }
 }

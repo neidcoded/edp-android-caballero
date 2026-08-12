@@ -40,6 +40,14 @@ android {
 }
 
 dependencies {
+    val lifecycleVersion = "2.10.0"
+
+    // Lets you call viewModel() inside a Composable
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
+
+    // Lets you use collectAsStateWithLifecycle()
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
