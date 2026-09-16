@@ -34,38 +34,7 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(innerPadding)
                     ) {
-
-                        val navController = rememberNavController()
-
-                        NavHost(
-                            navController = navController,
-                            startDestination = Home
-                        ) {
-
-                            composable<Home> {
-
-                                HomeScreen(
-                                    onShowGreeting = { typedName ->
-
-                                        navController.navigate(
-                                            Greeting(
-                                                userName = typedName
-                                            )
-                                        )
-                                    }
-                                )
-                            }
-
-                            composable<Greeting> { backStackEntry ->
-
-                                val greeting: Greeting =
-                                    backStackEntry.toRoute()
-
-                                GreetingScreen(
-                                    userName = greeting.userName
-                                )
-                            }
-                        }
+                        com.liceo.liceochat.ui.ChatScreen()
                     }
                 }
             }
