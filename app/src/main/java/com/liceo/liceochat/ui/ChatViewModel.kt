@@ -41,6 +41,7 @@ class ChatViewModel(
                 }
                 AppResult.Failure.NoInternet -> ChatUiState.Error("No internet connection.")
                 AppResult.Failure.Timeout -> ChatUiState.Error("The server took too long.")
+                is AppResult.Failure.Unknown -> ChatUiState.Error(r.message ?: "Unknown error")
                 is AppResult.Failure -> ChatUiState.Error("Something went wrong.")
             }
         }

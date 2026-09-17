@@ -1,13 +1,16 @@
 package com.liceo.liceochat.data.network.dto
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.longOrNull
 
 @Serializable
 data class MessageDto(
     val id: String? = null,
     val sender: String? = null,
     val text: String? = null,
-    val createdAt: Long? = null
+    val createdAt: JsonElement? = null
 )
 
 @Serializable
